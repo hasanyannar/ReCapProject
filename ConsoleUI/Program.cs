@@ -31,11 +31,25 @@ namespace ConsoleUI
 
             //carManager.Add(new Car { BrandId = 3, ColorId = 1, ModelYear = 2020, DailyPrice = 175000, Description = "Megane" });
 
-            foreach (var car in carManager.GetCarDetails())
+            var result = carManager.GetCarDetails();
+
+            if (result.Success == true)
             {
-                Console.WriteLine(" **Arabanın Markası: "+car.BrandName + " **Arabanın Adı: "+car.Description 
-                    +" **Abarnın Rengi: " +car.ColorName);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(" **Arabanın Markası: " + car.BrandName + " **Arabanın Adı: " + car.Description
+                        + " **Abarnın Rengi: " + car.ColorName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+
+            
+
+            
         }
     }
 }
