@@ -42,7 +42,7 @@ namespace Business.Constant
 
         public static string ColorAdded = "Araç Rengi Eklendi";
         public static string ColorDeleted = "Araç Rengi Silindi";
-        public static string ColorUpdated = "Araç Rengi Silindi";
+        public static string ColorUpdated = "Araç Rengi Güncellendi";
         public static string ColorGetId = "Renk Görüntülendi";
         public static string ColorListed = "Renkler Listelendi";
         

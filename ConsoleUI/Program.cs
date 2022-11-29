@@ -15,9 +15,7 @@ namespace ConsoleUI
             //UserTest();
             //CustomerTest();
             RentalTest();
-
         }
-
         private static void RentalTest()
         {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
@@ -72,22 +70,13 @@ namespace ConsoleUI
                 foreach (var car in result.Data)
                 {
                     Console.WriteLine("   Arabanın Markası:  " + car.BrandName + "   Arabanın Adı:  " + car.Description
-                      + "   Abarnın Rengi:  " + car.ColorName);
-               
+                      + "   Abarnın Rengi:  " + car.ColorName);               
                 }
-            
-
             }
             else
             {
                 Console.WriteLine(result.Message);
-            }
-            
-
-
-            
-
-            
+            }       
         }
     }
 }

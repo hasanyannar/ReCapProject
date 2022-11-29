@@ -22,7 +22,7 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CustomerDetailDto
                              {
                                  CustomerId = c.CustomerId,
-                                 CustomerName = u.FirstName,
+                                 CustomerName = u.FirstName + " " + u.LastName, 
                                  CompanyName = c.CompanyName,
                              };
                 return result.ToList();

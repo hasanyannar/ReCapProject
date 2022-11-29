@@ -2,6 +2,7 @@
 using Business.Constant;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -41,11 +42,11 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour==23)
+            if (DateTime.Now.Hour==12)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarLisded);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
@@ -59,7 +60,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAllCarsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.BrandId==brandId));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.BrandId==brandId) ,Messages.BrandGetId);
         }
 
         public IDataResult<List<Car>> GetAllCarsByColorId(int colorId)
@@ -71,6 +72,11 @@ namespace Business.Concrete
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
+        }
+
+        public IDataResult<Car> GetById(int Id)
+        {
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == Id), Messages.CarLisded);
         }
     }
 }
