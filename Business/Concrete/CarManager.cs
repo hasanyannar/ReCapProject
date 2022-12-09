@@ -3,6 +3,7 @@ using Business.Constant;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -22,17 +23,27 @@ namespace Business.Concrete
     {
 
         ICarDal _carDal;
+        IBrandService _brandService;    
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, IBrandService brandService)
         {
             _carDal = carDal;
+            _brandService = brandService;   
         }
 
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
-        {             
+        {
+            //Rules
+
+            var result = BusinessRules.Run(CheckIfCarCountOfBrandCorrect(car.BrandId), CheckIfLimitExceded());
+
+            if (result != null)
+            {
+                return result;
+            }
             _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);             
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
@@ -43,7 +54,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour==12)
+            if (DateTime.Now.Hour == 12)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
@@ -56,17 +67,17 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),Messages.CarLisded);
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.CarLisded);
         }
 
         public IDataResult<List<Car>> GetAllCarsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.BrandId==brandId) ,Messages.BrandGetId);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId), Messages.BrandGetId);
         }
 
         public IDataResult<List<Car>> GetAllCarsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.ColorId==colorId));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
         }
 
         public IResult Update(Car car)
@@ -79,5 +90,28 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == Id), Messages.CarLisded);
         }
+
+        private IResult CheckIfCarCountOfBrandCorrect(int brandId)
+        {
+            var result = _carDal.GetAll(p => p.BrandId == brandId).Count;
+            if (result >= 55)
+            {
+                return new ErrorResult(Messages.CarCountOfBrandError);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfLimitExceded()
+        {
+            var result = _brandService.GetAll();
+            if (result.Data.Count()>5)
+            {
+                return new ErrorResult(Messages.BrandLimitExceded);
+            }
+            return new SuccessResult();
+        }
+
+
+
     }
 }

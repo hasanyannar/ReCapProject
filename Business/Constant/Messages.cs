@@ -45,6 +45,7 @@ namespace Business.Constant
         public static string ColorUpdated = "Araç Rengi Güncellendi";
         public static string ColorGetId = "Renk Görüntülendi";
         public static string ColorListed = "Renkler Listelendi";
-        
+        public static string CarCountOfBrandError = "en fazla bu renge sahip iki araç olabilir";
+        public static string BrandLimitExceded = "Araç Marka limiti Aşıldı";
     }
 }
