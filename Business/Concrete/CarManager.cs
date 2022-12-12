@@ -54,7 +54,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour == 12)
+            if (DateTime.Now.Hour == 00)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
