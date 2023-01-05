@@ -33,8 +33,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfColorDal>().As<IColorDal>().SingleInstance();
 
             //User nesnesi
-            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+            //builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
+            //builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
             //Customer nesnesi
             builder.RegisterType<CustomerManager>().As<ICustomerService>().SingleInstance();

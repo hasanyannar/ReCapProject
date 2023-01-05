@@ -34,17 +34,17 @@ namespace ConsoleUI
             }
         }
 
-        private static void UserTest()
-        {
-            UserManager userManager = new UserManager(new EfUserDal());
+        //private static void UserTest()
+        //{
+        //    UserManager userManager = new UserManager(new EfUserDal());
 
-            //userManager.Add(new User { FirstName = "Mehmet", LastName = "ÇAlışkan", Email = "vet.hekim_mehmet@gmail.com", Password = "12345" });
+        //    //userManager.Add(new User { FirstName = "Mehmet", LastName = "ÇAlışkan", Email = "vet.hekim_mehmet@gmail.com", Password = "12345" });
 
-            foreach (var user in userManager.GetAllUser().Data)
-            {
-                Console.WriteLine(user.FirstName + " "+ user.LastName + " " + user.Email);
-            }
-        }
+        //    foreach (var user in userManager.GetAllUser().Data)
+        //    {
+        //        Console.WriteLine(user.FirstName + " "+ user.LastName + " " + user.Email);
+        //    }
+        //}
 
         private static void BrandTest()
         {
